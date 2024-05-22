@@ -150,6 +150,11 @@ li:hover {
 	border: solid 1px #1D6154;
 }
 
+.btn-selected {
+	color: white;
+	background-color: #1D6154;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
