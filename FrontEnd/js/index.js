@@ -1,3 +1,5 @@
+/*** Chargement du DOM */
+
 document.addEventListener("DOMContentLoaded", () => {
 /*********************************** WORKS *******************************************/
 
@@ -98,4 +100,31 @@ fetch("http://localhost:5678/api/categories")
         }
 })
 
+/******* LOGIN LOGOUT *******/
 
+document.addEventListener('DOMContentLoaded', () => {
+    const loginLink = document.getElementById('loginLink');
+    const logoutButton = document.getElementById('logoutButton');
+
+    
+/**** Vérification du statut de connexion  ****/
+    const checkLoginStatus = () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            loginLink.style.display = 'none';
+            logoutButton.style.display = 'block';
+        } else {
+            loginLink.style.display = 'block';
+            logoutButton.style.display = 'none';
+        }
+    };
+
+
+    checkLoginStatus();
+
+    logoutButton.addEventListener('click', () => {
+        checkLoginStatus();
+        localStorage.removeItem('token');
+        window.location = "index.html";
+    }) 
+})
