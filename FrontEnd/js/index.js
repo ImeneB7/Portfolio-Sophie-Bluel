@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /** Récupération des données works et insertion dans le DOM + définition de la data-category*/
 
-
+function loadMainGallery() {
 fetch("http://localhost:5678/api/works")
     .then(res => res.json())                        
     .then(data => {
@@ -23,9 +23,11 @@ fetch("http://localhost:5678/api/works")
         figure.setAttribute("data-category", work.categoryId);
         gallery.appendChild(figure);
     })
-
+ 
 })
-
+.catch(error => console.error('Erreur de chargement des images', error))
+}
+loadMainGallery();
 
 /********************************** CATEGORIES ****************************************/
 
@@ -42,7 +44,7 @@ fetch("http://localhost:5678/api/categories")
             return;
         }
 
-        /*** Création du bouton TOUS */
+        /**** Création du bouton TOUS ****/
 
         const allBtn = document.createElement("button");        
         allBtn.innerText = "Tous";
@@ -56,7 +58,10 @@ fetch("http://localhost:5678/api/categories")
             })
         })
 
+
+
         /*** Création des autres boutons + data-category pour identifier la categorie */
+
 
         categories.forEach(category => {
             const filter = document.querySelector(".filters");
@@ -80,9 +85,9 @@ fetch("http://localhost:5678/api/categories")
        })
 
 
+
        /********************* TRIER PAR CATEGORIES **********************/
 
-       
        categoryFilter();
 
     })
@@ -105,20 +110,35 @@ fetch("http://localhost:5678/api/categories")
 document.addEventListener('DOMContentLoaded', () => {
     const loginLink = document.getElementById('loginLink');
     const logoutButton = document.getElementById('logoutButton');
-
+    const modeEditionBar = document.querySelector('.mode-edition-bar')
+    const header = document.querySelector("header")
+    const filters = document.querySelector('.filters')
+    const modifLink = document.querySelector("a.modif-link")
     
+    
+
 /**** Vérification du statut de connexion  ****/
     const checkLoginStatus = () => {
         const token = localStorage.getItem('token');
         if (token) {
-            loginLink.style.display = 'none';
-            logoutButton.style.display = 'block';
+            loginLink.style.display = 'none';/*** si connecté le bouton login disparait */
+            logoutButton.style.display = 'block';/** si connecté le bouton logout apparait */
+            modeEditionBar.style.display = 'block'; /** si connecté la barre du mode édition apparait */
+            header.classList.add("with-mode-edition-bar") /** si connecté le header se décale  */
+            filters.style.display = 'none'; /** si connecté les filtres disparaissent */
+            
         } else {
             loginLink.style.display = 'block';
             logoutButton.style.display = 'none';
-        }
+            modeEditionBar.style.display = 'none';
+            modifLink.style.display = 'none'; /**le lien d'ouverture de la modale disparait */
+        }      
+        
     };
 
+
+
+/*******  Déconnexion en suppriment le token  *****/
 
     checkLoginStatus();
 
@@ -127,4 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('token');
         window.location = "index.html";
     }) 
+
+
 })
+

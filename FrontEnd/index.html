@@ -6,11 +6,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+
+	<section id="connected">
+		<div class="mode-edition-bar">
+			<i class="fa-regular fa-pen-to-square"></i>
+			<p>Mode édition</p>
+		</div>
+	</section>
+
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
@@ -37,6 +46,39 @@
 	</section>
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
+
+		<a href="#modal1" class="modif-link"><i class="fa-regular fa-pen-to-square icon-modif"></i>modifier</a>
+
+		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="title-modal">
+			<div class="modal-wrapper">
+				<h3 class="title-modal">Galerie photo</h3>
+				<span><i class="fa-solid fa-xmark"></i></span>
+				<div class="img-container"></div>
+				<button class="btn-modal">Ajouter une photo</button>
+			</div>
+		</aside>
+		<aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="title-modal">
+			<div class="modal-wrapper2">
+				<h3 class="title-modal">Ajout photo</h3>
+				<span><i class="fa-solid fa-arrow-left"></i></span>
+				<span><i class="fa-solid fa-xmark"></i></span>
+				<form class="form-modal">
+					<div class="containerFile">
+						<span><i class="fa-regular fa-image"></i></span>
+						<label class="label-modal" for="file">+Ajouter photo</label>
+						<input class="input-modal" type="file" id="file" name="image">
+						<img src="#" alt="Aperçu de l'image" class="img-input">
+						<p class="txt-under-img">jpg,png: 4 mo max</p>
+					</div>
+					<label class="label-title" for="title">Titre</label>
+					<input class="input-title" type="text" id="title" name="title">
+					<label for="category">Catégorie</label>
+					<select class="select-cat" name="category" id="category"></select>
+					<button class="button-img">Valider</button>
+				</form>
+			</div>
+		</aside>
+
 		<div class="filters">
 			
 		</div>
@@ -67,5 +109,6 @@
 	</nav>
 </footer>
 <script src="js/index.js"></script>
+<script src="js/modal.js"></script>
 </body>
 </html>
