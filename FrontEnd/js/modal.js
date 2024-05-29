@@ -1,5 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
+                    /** ELEMENTS DU DOM **/
     const modifLink = document.querySelector("a.modif-link");
     const modal = document.getElementById("modal1");
     const modalAddImg = document.getElementById("modal2");
@@ -8,14 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeBtnModal2 = modalAddImg.querySelector(".fa-xmark")
     const arrowLeft = modalAddImg.querySelector(".fa-arrow-left")
 
-    
+    /** CLICK POUR FAIRE APPARAITRE LA MODALE */
     modifLink.addEventListener('click', function(event) {
         event.preventDefault();
         modal.style.display = 'flex';
         loadImg();
     });
 
-/*** click sur l'icone croix pour fermer la modale */
+/*** CLICK sur l'icone croix pour fermer la modale */
     closeBtnModal1.addEventListener('click', () => {
         modal.style.display = 'none';
     });
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
    }
    
-/*** Création de l'emplacement des images dans le DOM ***/
+/*** Fonction pour ajouter des images dans la modale ***/
 
    function addImgToModal(src, container, id) {
         const imgContainer = document.createElement("div")
@@ -55,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
         img.src = src;
         img.alt= 'image';
 
-        /**Ajout de l'icone corbeille */
+        /**Ajout de l'icone corbeille et deu delete au click*/
         const binIcon = document.createElement("i");
         binIcon.classList.add('fa-solid', 'fa-trash-can')
         binIcon.addEventListener('click', () => {
@@ -131,7 +132,82 @@ document.addEventListener('DOMContentLoaded', function() {
     modal.style.display = 'flex';
    })
 
+   /** Prévisualisation image */
+   const previewImg = document.querySelector(".containerFile img.img-input")
+   const inputFile  = document.querySelector(".containerFile input")
+   const labelFile = document.querySelector(".containerFile label")
+   const iconFile = document.querySelector(".containerFile .fa-image")
+   const pFile = document.querySelector(".containerFile p")
+
+   inputFile.addEventListener('change', () => {
+    const file = inputFile.files[0]
+    console.log(file)
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            previewImg.src = e.target.result
+            previewImg.style.display = 'block'
+            labelFile.style.display = 'none'
+            iconFile.style.display = 'none'
+            pFile.style.display = 'none'
+        }
+        reader.readAsDataURL(file);
+    }
+   })
    
+   function fetchCategories() {
+    fetch('http://localhost:5678/api/categories')
+    .then(res => res.json())
+    .then(data => {
+        categories = data;
+        displayCategoryModal();
+    })
+    .catch(error => console.error('Erreur de chargement des catégories', error))
+   }
+
+   /**** Intégration des catégories dans le Input select ****/
+
+   function displayCategoryModal() {
+    const select = document.querySelector(".form-modal .select-cat")
+    categories.forEach(category => {
+        const option = document.createElement("option")
+        option.value = category.id
+        option.textContent  = category.name
+        select.appendChild(option)
+    })
+   }
+
+   fetchCategories();
+
+/*** POST */
+   
+const modalForm = document.querySelector('.form-modal');
+
+modalForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(modalForm);
+    const token = localStorage.getItem('token')
+
+    fetch("http://localhost:5678/api/works/", {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Données envoyées')
+            loadMainGallery();
+        } else {
+            console.error('Erreur lors de l\'envoi des données')
+        }
+    })
+    .catch(error => {
+        console.error('Erreur lors de la requête fetch depuis la modale')
+    })
+})
 
 });
 

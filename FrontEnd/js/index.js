@@ -31,8 +31,6 @@ loadMainGallery();
 
 /********************************** CATEGORIES ****************************************/
 
-const categories = ["objets", "appartements", "hôtels & restaurants"];
-
 
 fetch("http://localhost:5678/api/categories")
     .then(res => res.json())
