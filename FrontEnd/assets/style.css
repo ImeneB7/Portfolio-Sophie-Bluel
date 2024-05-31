@@ -334,20 +334,29 @@ header.with-mode-edition-bar {
 
 
 /*** icone du lien modifier ***/
+
+#portfolio-header h2{
+	display: flex;
+	justify-content: center;
+}
+
+.icon-modif, .modif-link {
+	margin-left: 400px;
+	position: relative;
+	left: -90px;
+	top: -50px;
+	padding: 0;
+}
+
 .icon-modif {
-	position: absolute;
-	top: 0;
-	right: 4rem;
+	top: 0px;
+	left: 0px;
 	color: black;
 	font-weight: 500;
 }
 
 .modif-link {
 	display: flex;
-	justify-content: center;
-	position: absolute;
-	top: 65%;
-	right: 35%;
 	text-decoration: none;
 	color: black;
 	font-weight: 600;
@@ -538,9 +547,9 @@ header.with-mode-edition-bar {
 }
 
 .button-img {
-	position: absolute;
-	top: 75%;
-	left: 37%;
+	position: relative;
+	top: 25%;
+	left: 28%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -548,15 +557,15 @@ header.with-mode-edition-bar {
 	height: 40px;
 	font-family: 'Syne';
 	color: white;
-	background-color: #1D6154;
+	background-color: #A7A7A7;
 	width: 200px;
 	border-radius: 60px ;
 	border: transparent;
 	cursor: pointer;
 }
 
-.button-img:focus {
-	background-color: #A7A7A7;
+.button-img:active {
+	background-color: #1D6154;
 }
 
 .input-title, .select-cat {

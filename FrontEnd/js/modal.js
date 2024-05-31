@@ -200,6 +200,17 @@ modalForm.addEventListener('submit', (e) => {
         if (response.ok) {
             console.log('Données envoyées')
             loadMainGallery();
+            response.json().then(data => {
+                const imgContainer = modal.querySelector(".img-container");
+                addImgToModal(data.imageUrl, imgContainer, data.id)
+            });
+            modalAddImg.style.display = 'none';
+            modal.style.display = 'flex';
+            modalForm.reset();
+            previewImg.style.display = 'none';
+            labelFile.style.display = 'block';
+            iconFile.style.display = 'block';
+            pFile.style.display = 'block';
         } else {
             console.error('Erreur lors de l\'envoi des données')
         }
@@ -207,8 +218,35 @@ modalForm.addEventListener('submit', (e) => {
     .catch(error => {
         console.error('Erreur lors de la requête fetch depuis la modale')
     })
+
+    
 })
 
+/*** ACTIVATION DU BOUTON VALIDER SI CHAMPS COMPLETES */
+
+const buttonImg = document.querySelector ('.button-img')
+const inputTitle = document.querySelector('.input-title');
+const selectCat = document.querySelector('.select-cat');
+
+function checkChampForm() {
+    const title = inputTitle.value.trim();
+    const category = selectCat.value.trim();
+
+    if (title !== '' && category !== '') {
+        buttonImg.removeAttribute('disabled');
+        buttonImg.style.cursor = 'pointer';
+        buttonImg.style.backgroundColor = '#1D6154';
+    } else {
+        buttonImg.setAttribute('disabled', true);
+        buttonImg.style.cursor = 'default';
+        buttonImg.style.backgroundColor = '#A7A7A7';
+    }
+}
+
+inputTitle.addEventListener('input', checkChampForm);
+selectCat.addEventListener('change', checkChampForm);
+
+checkChampForm();
 });
 
 
