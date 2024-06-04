@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeBtnModal2 = modalAddImg.querySelector(".fa-xmark")
     const arrowLeft = modalAddImg.querySelector(".fa-arrow-left")
 
+
     /** CLICK POUR FAIRE APPARAITRE LA MODALE */
     modifLink.addEventListener('click', function(event) {
         event.preventDefault();
@@ -77,14 +78,14 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('http://localhost:5678/api/works/' +id,{
         method: 'DELETE',
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}` 
         }
     })
     .then(response => {
         if (response.ok) {
             imgContainer.remove();
             console.log("photo et id supprimé")
-            loadMainGallery();
+            loadMainGallery(); /** recharge la galerie après suppression */
         } else {
             console.error('erreur de suppresion')
         }
@@ -121,29 +122,49 @@ document.addEventListener('DOMContentLoaded', function() {
    btnAddModal.addEventListener('click', () => {
     modal.style.display = 'none';
     modalAddImg.style.display = 'flex';
+    resetImagePreview();
    })
 
    closeBtnModal2.addEventListener('click', () => {
     modalAddImg.style.display = 'none';
+    resetImagePreview();
    })
 
    arrowLeft.addEventListener('click', () => {
     modalAddImg.style.display = 'none';
     modal.style.display = 'flex';
+    resetImagePreview();
    })
 
    /** Prévisualisation image */
+   
    const previewImg = document.querySelector(".containerFile img.img-input")
    const inputFile  = document.querySelector(".containerFile input")
    const labelFile = document.querySelector(".containerFile label")
    const iconFile = document.querySelector(".containerFile .fa-image")
    const pFile = document.querySelector(".containerFile p")
 
+   resetImagePreview();
+
+   function resetImagePreview() {
+    const previewImg = document.querySelector(".containerFile img.img-input");
+    const labelFile = document.querySelector(".containerFile label");
+    const iconFile = document.querySelector(".containerFile .fa-image");
+    const pFile = document.querySelector(".containerFile p");
+
+    previewImg.style.display = 'none';
+    labelFile.style.display = 'block';
+    iconFile.style.display = 'block';
+    pFile.style.display = 'block';
+    previewImg.src = ''; 
+    inputFile.value = ''; 
+
+
    inputFile.addEventListener('change', () => {
     const file = inputFile.files[0]
     console.log(file)
     if (file) {
-        const reader = new FileReader();
+        const reader = new FileReader(); /** je lis le contenu du fichier */
         reader.onload = function (e) {
             previewImg.src = e.target.result
             previewImg.style.display = 'block'
@@ -151,10 +172,10 @@ document.addEventListener('DOMContentLoaded', function() {
             iconFile.style.display = 'none'
             pFile.style.display = 'none'
         }
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file); /** lis le contenu et le convertit en chaine */
     }
    })
-   
+   }
    function fetchCategories() {
     fetch('http://localhost:5678/api/categories')
     .then(res => res.json())
@@ -166,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
    }
 
    /**** Intégration des catégories dans le Input select ****/
+   fetchCategories();
 
    function displayCategoryModal() {
     const select = document.querySelector(".form-modal .select-cat")
@@ -177,7 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
     })
    }
 
-   fetchCategories();
 
 /*** POST */
    

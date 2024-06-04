@@ -37,7 +37,7 @@ fetch("http://localhost:5678/api/categories")
     .then((categories) => {
         console.log("Données reçues par l'API:", categories)
         const filter = document.querySelector(".filters");
-        if (!filter) {
+        if (!filter) { /** je vérifie que filters est bien dans le DOM */
             console.error("Les élément avec la classe 'filters' n'apparaissent pas dans le DOM");
             return;
         }
@@ -81,8 +81,6 @@ fetch("http://localhost:5678/api/categories")
                 console.log(`Button ${category.name} clicked`)
             })
        })
-
-
 
        /********************* TRIER PAR CATEGORIES **********************/
 
@@ -136,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-/*******  Déconnexion en suppriment le token  *****/
+/*******  Déconnexion en supprimant le token  *****/
 
     checkLoginStatus();
 
